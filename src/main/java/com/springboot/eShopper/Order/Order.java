@@ -3,19 +3,52 @@ package com.springboot.eShopper.Order;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.springboot.eShopper.Address.Address;
 import com.springboot.eShopper.OrderItem.OrderItem;
 import com.springboot.eShopper.User.User;
 
+@Entity
+@Table(name="order")
 public class Order {
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="order_id")
 	private int OrderId; // natural key
+	
+	@ManyToOne
 	private User user;
+	
+	@OneToMany
+	@JoinTable(
+			name="order_order_item",
+			joinColumns=@JoinColumn(name="order_id"),
+			inverseJoinColumns=@JoinColumn(name="product_id")
+	)
 	private List<OrderItem> orderItems;
+	
+	@ManyToOne
 	private Address userAddress;
+	
+	@Column(name="delivery_window")
 	private Date deliveryWindow;
+	
+	@Column(name="delivery_fee")
 	private double deliveryFee;
+	
+	@Column(name="shopper_tip")
 	private double shopperTip;
 	
+	// Getters and Setters
 	public int getOrderId() {
 		return OrderId;
 	}

@@ -1,13 +1,30 @@
-package com.springboot.eShopper.UserFavourites;
+package com.springboot.eShopper.Favourite;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.springboot.eShopper.Product.Product;
 import com.springboot.eShopper.User.User;
 
-public class UserFavourites {
+@Entity
+@Table(name="favourite")
+public class Favourite {
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="favorite_id")
 	private int favouriteId;	// surrogate key
+	
+	@ManyToOne
 	private User user;
+	
+	@ManyToOne
 	private Product product;
 	
+	// Getters and Setters
 	public int getFavouriteId() {
 		return favouriteId;
 	}

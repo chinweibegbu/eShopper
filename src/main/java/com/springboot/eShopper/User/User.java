@@ -2,21 +2,78 @@ package com.springboot.eShopper.User;
 
 import java.util.List;
 
-import com.springboot.eShopper.Address.Address;
-import com.springboot.eShopper.UserFavourites.UserFavourites;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+import com.springboot.eShopper.Address.Address;
+import com.springboot.eShopper.Cart.Cart;
+import com.springboot.eShopper.Favourite.Favourite;
+import com.springboot.eShopper.Order.Order;
+
+@Entity
+@Table(name="user")
 public class User {
-	private int userId;
-	private String firstName;
-	private String lastName;
-	private int phoneNumber;
-	private String email;
-	private List<Address> addresses;
-	private List<UserFavourites> userFavourites;
-	private double wallet;
-	private boolean isBlackListed;
-	private String blackListDetails;
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="user_id")
+	private int userId;	// natural or surrogate key?
 	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	@Column(name="phont_number")
+	private int phoneNumber;
+	
+	@Column(name="email")
+	private String email;
+	
+	@OneToMany
+	@JoinTable(
+			name="user_address",
+			joinColumns=@JoinColumn(name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="address_id")
+	)
+	private List<Address> addresses;
+	
+	@OneToOne
+	private Cart cart;
+
+	@OneToMany
+	@JoinTable(
+			name="user_order",
+			joinColumns=@JoinColumn(name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="order_id")
+	)
+	private List<Order> orders;
+	
+	@OneToMany
+	@JoinTable(
+			name="user_favourite",
+			joinColumns=@JoinColumn(name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="favourite_id")
+	)
+	private List<Favourite> favourites;
+	
+	@Column(name="wallet")
+	private double wallet;
+	
+	@Column(name="is_blacklisted")
+	private boolean isBlacklisted;
+	
+	@Column(name="blacklist_details")
+	private String blacklistDetails;
+	
+	// Getters and Setters
 	public int getUserId() {
 		return userId;
 	}
@@ -54,27 +111,39 @@ public class User {
 		this.wallet = wallet;
 	}
 	public boolean isBlackListed() {
-		return isBlackListed;
+		return isBlacklisted;
 	}
-	public void setBlackListed(boolean isBlackListed) {
-		this.isBlackListed = isBlackListed;
+	public void setBlackListed(boolean isBlacklisted) {
+		this.isBlacklisted = isBlacklisted;
 	}
 	public String getBlackListDetails() {
-		return blackListDetails;
+		return blacklistDetails;
 	}
-	public void setBlackListDetails(String blackListDetails) {
-		this.blackListDetails = blackListDetails;
+	public void setBlackListDetails(String blacklistDetails) {
+		this.blacklistDetails = blacklistDetails;
 	}
-	public List<UserFavourites> getUserFavourites() {
-		return userFavourites;
+	public List<Favourite> getFavourites() {
+		return favourites;
 	}
-	public void setUserFavourites(List<UserFavourites> userFavourites) {
-		this.userFavourites = userFavourites;
+	public void setFavourites(List<Favourite> favourites) {
+		this.favourites = favourites;
 	}
 	public List<Address> getAddresses() {
 		return addresses;
 	}
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+	public Cart getCart() {
+		return cart;
+	}
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+	public List<Order> getOrder() {
+		return orders;
+	}
+	public void setOrder(List<Order> order) {
+		this.orders = order;
 	}
 }
