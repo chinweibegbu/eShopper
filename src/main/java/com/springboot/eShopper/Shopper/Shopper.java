@@ -1,16 +1,16 @@
 package com.springboot.eShopper.Shopper;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,23 +33,26 @@ public class Shopper {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Column(name="phont_number")
-	private int phoneNumber;
+	@Column(name="phone_number")
+	private String phoneNumber;
 	
 	@Column(name="email")
 	private String email;
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	private List<Address> addresses = new ArrayList<>();
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<Address> addresses = new ArrayList<>();
 	
 	@OneToOne
 	private Cart cart;
 
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<Order> orders = new ArrayList<>();
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	private List<Favourite> favourites = new ArrayList<>();
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<Favourite> favourites = new ArrayList<>();
 	
 	@Column(name="wallet")
 	private double wallet;
@@ -79,10 +82,10 @@ public class Shopper {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public String getEmail() {
@@ -109,16 +112,16 @@ public class Shopper {
 	public void setBlacklistDetails(String blacklistDetails) {
 		this.blacklistDetails = blacklistDetails;
 	}
-	public List<Favourite> getFavourites() {
+	public Collection<Favourite> getFavourites() {
 		return favourites;
 	}
-	public void setFavourites(List<Favourite> favourites) {
+	public void setFavourites(Collection<Favourite> favourites) {
 		this.favourites = favourites;
 	}
-	public List<Address> getAddresses() {
+	public Collection<Address> getAddresses() {
 		return addresses;
 	}
-	public void setAddresses(List<Address> addresses) {
+	public void setAddresses(Collection<Address> addresses) {
 		this.addresses = addresses;
 	}
 	public Cart getCart() {
@@ -127,10 +130,10 @@ public class Shopper {
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
-	public List<Order> getOrders() {
+	public Collection<Order> getOrders() {
 		return orders;
 	}
-	public void setOrder(List<Order> orders) {
+	public void setOrder(Collection<Order> orders) {
 		this.orders = orders;
 	}
 }

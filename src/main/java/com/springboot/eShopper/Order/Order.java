@@ -1,11 +1,14 @@
 package com.springboot.eShopper.Order;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +31,8 @@ public class Order {
 	private Shopper shopper;
 	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
-	private List<OrderItem> orderItems;
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<OrderItem> orderItems = new ArrayList<>();
 	
 	@ManyToOne
 	private Address shopperAddress;
@@ -47,7 +51,7 @@ public class Order {
 		return orderId;
 	}
 	public void setOrderId(int orderId) {
-		orderId = orderId;
+		this.orderId = orderId;
 	}
 	public Shopper getShopper() {
 		return shopper;
@@ -55,10 +59,10 @@ public class Order {
 	public void setShopper(Shopper shopper) {
 		this.shopper = shopper;
 	}
-	public List<OrderItem> getOrderItems() {
+	public Collection<OrderItem> getOrderItems() {
 		return orderItems;
 	}
-	public void setOrderItems(List<OrderItem> orderItems) {
+	public void setOrderItems(Collection<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 	public Address getShopperAddress() {

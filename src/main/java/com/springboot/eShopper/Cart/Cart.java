@@ -1,11 +1,13 @@
 package com.springboot.eShopper.Cart;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,8 @@ public class Cart {
 	private Shopper shopper;
 	
 	@OneToMany(mappedBy="cart", cascade = CascadeType.ALL)
-	private List<CartItem> cartItems = new ArrayList<>();
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<CartItem> cartItems = new ArrayList<>();
 	
 	@Column(name="wallet_top")
 	private double walletTop;
@@ -48,10 +51,10 @@ public class Cart {
 	public void setShopper(Shopper shopper) {
 		this.shopper = shopper;
 	}
-	public List<CartItem> getCartItems() {
+	public Collection<CartItem> getCartItems() {
 		return cartItems;
 	}
-	public void setCartItems(List<CartItem> cartItems) {
+	public void setCartItems(Collection<CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
 	public double getWalletTop() {

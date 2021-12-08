@@ -1,18 +1,18 @@
 package com.springboot.eShopper.Product;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -41,7 +41,8 @@ public class Product {
 	private int stockCount;
 	
 	@OneToMany(mappedBy="product", cascade = CascadeType.ALL)
-	private List<Favourite> favourites = new ArrayList<>();
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<Favourite> favourites = new ArrayList<>();
 	
 	// Getters and Setters
 	public int getProductId() {
@@ -74,10 +75,10 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	public List<Favourite> getFavourites() {
+	public Collection<Favourite> getFavourites() {
 		return favourites;
 	}
-	public void setFavourites(List<Favourite> favourites) {
+	public void setFavourites(Collection<Favourite> favourites) {
 		this.favourites = favourites;
 	}
 }

@@ -1,17 +1,16 @@
 package com.springboot.eShopper.Category;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,7 +27,8 @@ public class Category {
 	private String categoryName;
 	
 	@OneToMany(mappedBy="category", cascade = CascadeType.ALL)
-	private List<Product> products = new ArrayList<>();
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Collection<Product> products = new ArrayList<>();
 	
 	// Getters and Setters
 	public int getCategoryId() {
@@ -43,10 +43,10 @@ public class Category {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public List<Product> getProducts() {
+	public Collection<Product> getProducts() {
 		return products;
 	}
-	public void setProducts(List<Product> products) {
+	public void setProducts(Collection<Product> products) {
 		this.products = products;
 	}
 }
