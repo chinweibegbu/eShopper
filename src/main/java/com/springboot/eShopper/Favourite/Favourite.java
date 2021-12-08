@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.springboot.eShopper.Product.Product;
-import com.springboot.eShopper.User.User;
+import com.springboot.eShopper.Shopper.Shopper;
 
 @Entity
 @Table(name="favourite")
@@ -19,7 +19,7 @@ public class Favourite {
 	private int favouriteId;	// surrogate key
 	
 	@ManyToOne
-	private User user;
+	private Shopper shopper;
 	
 	@ManyToOne
 	private Product product;
@@ -31,11 +31,11 @@ public class Favourite {
 	public void setFavouriteId(int favouriteId) {
 		this.favouriteId = favouriteId;
 	}
-	public User getUser() {
-		return user;
+	public Shopper getShopper() {
+		return shopper;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setShopper(Shopper shopper) {
+		this.shopper = shopper;
 	}
 	public Product getProduct() {
 		return product;

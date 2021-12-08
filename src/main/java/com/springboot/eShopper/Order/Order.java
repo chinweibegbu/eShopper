@@ -3,41 +3,35 @@ package com.springboot.eShopper.Order;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.springboot.eShopper.Address.Address;
 import com.springboot.eShopper.OrderItem.OrderItem;
-import com.springboot.eShopper.User.User;
+import com.springboot.eShopper.Shopper.Shopper;
 
 @Entity
 @Table(name="order")
 public class Order {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="order_id")
-	private int OrderId; // natural key
+	private int orderId; // natural key
 	
 	@ManyToOne
-	private User user;
+	private Shopper shopper;
 	
-	@OneToMany
-	@JoinTable(
-			name="order_order_item",
-			joinColumns=@JoinColumn(name="order_id"),
-			inverseJoinColumns=@JoinColumn(name="product_id")
-	)
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems;
 	
 	@ManyToOne
-	private Address userAddress;
+	private Address shopperAddress;
 	
 	@Column(name="delivery_window")
 	private Date deliveryWindow;
@@ -50,16 +44,16 @@ public class Order {
 	
 	// Getters and Setters
 	public int getOrderId() {
-		return OrderId;
+		return orderId;
 	}
 	public void setOrderId(int orderId) {
-		OrderId = orderId;
+		orderId = orderId;
 	}
-	public User getUser() {
-		return user;
+	public Shopper getShopper() {
+		return shopper;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setShopper(Shopper shopper) {
+		this.shopper = shopper;
 	}
 	public List<OrderItem> getOrderItems() {
 		return orderItems;
@@ -67,11 +61,11 @@ public class Order {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
-	public Address getUserAddress() {
-		return userAddress;
+	public Address getShopperAddress() {
+		return shopperAddress;
 	}
-	public void setUserAddress(Address userAddress) {
-		this.userAddress = userAddress;
+	public void setShopperAddress(Address shopperAddress) {
+		this.shopperAddress = shopperAddress;
 	}
 	public Date getDeliveryWindow() {
 		return deliveryWindow;

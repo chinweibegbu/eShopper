@@ -1,7 +1,9 @@
 package com.springboot.eShopper.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,27 +24,11 @@ public class Category {
 	@Column(name="category_id")
 	private int categoryId;	// natural key
 	
-	@Column(name="product_id")
+	@Column(name="category_name")
 	private String categoryName;
 	
-	@OneToMany
-	@JoinTable(
-			name="category_sub_category",
-			joinColumns=@JoinColumn(name="category_id"),
-			inverseJoinColumns=@JoinColumn(name="sub_category_id")
-	)
-	private List<Category> subCategories;
-	
-	@ManyToOne
-	private Category parentCategory;
-	
-	@OneToMany
-	@JoinTable(
-			name="category_product",
-			joinColumns=@JoinColumn(name="category_id"),
-			inverseJoinColumns=@JoinColumn(name="product_id")
-	)
-	private List<Product> products;
+	@OneToMany(mappedBy="category", cascade = CascadeType.ALL)
+	private List<Product> products = new ArrayList<>();
 	
 	// Getters and Setters
 	public int getCategoryId() {
@@ -57,10 +43,10 @@ public class Category {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public List<Category> getSubCategories() {
-		return subCategories;
+	public List<Product> getProducts() {
+		return products;
 	}
-	public void setSubCategories(List<Category> subCategories) {
-		this.subCategories = subCategories;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 }

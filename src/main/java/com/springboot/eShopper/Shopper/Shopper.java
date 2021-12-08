@@ -1,7 +1,9 @@
-package com.springboot.eShopper.User;
+package com.springboot.eShopper.Shopper;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,11 +21,11 @@ import com.springboot.eShopper.Favourite.Favourite;
 import com.springboot.eShopper.Order.Order;
 
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="shopper")
+public class Shopper {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="user_id")
-	private int userId;	// natural or surrogate key?
+	@Column(name="shopper_id")
+	private int shopperId;	// natural or surrogate key?
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -37,32 +39,17 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
-	@OneToMany
-	@JoinTable(
-			name="user_address",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="address_id")
-	)
-	private List<Address> addresses;
+	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
+	private List<Address> addresses = new ArrayList<>();
 	
 	@OneToOne
 	private Cart cart;
 
-	@OneToMany
-	@JoinTable(
-			name="user_order",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="order_id")
-	)
-	private List<Order> orders;
+	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
+	private List<Order> orders = new ArrayList<>();
 	
-	@OneToMany
-	@JoinTable(
-			name="user_favourite",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="favourite_id")
-	)
-	private List<Favourite> favourites;
+	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
+	private List<Favourite> favourites = new ArrayList<>();
 	
 	@Column(name="wallet")
 	private double wallet;
@@ -74,11 +61,11 @@ public class User {
 	private String blacklistDetails;
 	
 	// Getters and Setters
-	public int getUserId() {
-		return userId;
+	public int getShopperId() {
+		return shopperId;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setShopperId(int shopperId) {
+		this.shopperId = shopperId;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -110,16 +97,16 @@ public class User {
 	public void setWallet(double wallet) {
 		this.wallet = wallet;
 	}
-	public boolean isBlackListed() {
+	public boolean isBlacklisted() {
 		return isBlacklisted;
 	}
-	public void setBlackListed(boolean isBlacklisted) {
+	public void setBlacklisted(boolean isBlacklisted) {
 		this.isBlacklisted = isBlacklisted;
 	}
-	public String getBlackListDetails() {
+	public String getBlacklistDetails() {
 		return blacklistDetails;
 	}
-	public void setBlackListDetails(String blacklistDetails) {
+	public void setBlacklistDetails(String blacklistDetails) {
 		this.blacklistDetails = blacklistDetails;
 	}
 	public List<Favourite> getFavourites() {
@@ -140,10 +127,10 @@ public class User {
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
-	public List<Order> getOrder() {
+	public List<Order> getOrders() {
 		return orders;
 	}
-	public void setOrder(List<Order> order) {
-		this.orders = order;
+	public void setOrder(List<Order> orders) {
+		this.orders = orders;
 	}
 }

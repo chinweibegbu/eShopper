@@ -1,12 +1,16 @@
 package com.springboot.eShopper.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,12 +22,13 @@ import com.springboot.eShopper.Favourite.Favourite;
 
 @Entity
 @Table(name="product")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Product {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="product_id")
 	private int productId;	// natural key
 	
-	@Column(name="product_id")
+	@Column(name="product_name")
 	private String productName;
 	
 	@ManyToOne
@@ -35,13 +40,8 @@ public class Product {
 	@Column(name="stock_count")
 	private int stockCount;
 	
-	@OneToMany
-	@JoinTable(
-			name="product_favourite",
-			joinColumns=@JoinColumn(name="product_id"),
-			inverseJoinColumns=@JoinColumn(name="favourite_id")
-	)
-	private List<Favourite> favourites;
+	@OneToMany(mappedBy="product", cascade = CascadeType.ALL)
+	private List<Favourite> favourites = new ArrayList<>();
 	
 	// Getters and Setters
 	public int getProductId() {

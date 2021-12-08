@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.springboot.eShopper.User.User;
+import com.springboot.eShopper.Shopper.Shopper;
 
 @Entity
 @Table(name="address")
@@ -18,7 +18,7 @@ public class Address {
 	private int addressId;	// surrogate key
 	
 	@ManyToOne
-	private User user;
+	private Shopper shopper;
 	
 	@Column(name="address_details")
 	private String addressDetails;
@@ -30,11 +30,11 @@ public class Address {
 	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
-	public User getUser() {
-		return user;
+	public Shopper getShopper() {
+		return shopper;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setShopper(Shopper shopper) {
+		this.shopper = shopper;
 	}
 	public String getAddressDetails() {
 		return addressDetails;
