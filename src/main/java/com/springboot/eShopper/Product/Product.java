@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.eShopper.Category.Category;
 import com.springboot.eShopper.Favourite.Favourite;
 

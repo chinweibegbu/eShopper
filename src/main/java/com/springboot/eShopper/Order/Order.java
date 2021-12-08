@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.eShopper.Address.Address;
 import com.springboot.eShopper.OrderItem.OrderItem;
 import com.springboot.eShopper.Shopper.Shopper;

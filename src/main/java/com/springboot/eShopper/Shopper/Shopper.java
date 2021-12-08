@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.eShopper.Address.Address;
 import com.springboot.eShopper.Cart.Cart;
 import com.springboot.eShopper.Favourite.Favourite;
@@ -41,6 +42,7 @@ public class Shopper {
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.LAZY)
+	@JsonIgnore
 	private Collection<Address> addresses = new ArrayList<>();
 	
 	@OneToOne
@@ -48,10 +50,12 @@ public class Shopper {
 
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.LAZY)
+	@JsonIgnore
 	private Collection<Order> orders = new ArrayList<>();
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.LAZY)
+	@JsonIgnore
 	private Collection<Favourite> favourites = new ArrayList<>();
 	
 	@Column(name="wallet")
