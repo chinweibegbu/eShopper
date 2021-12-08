@@ -1,4 +1,4 @@
-package com.springboot.eShopper.Order;
+package com.springboot.eShopper.Purchase;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,22 +18,22 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.eShopper.Address.Address;
-import com.springboot.eShopper.OrderItem.OrderItem;
+import com.springboot.eShopper.PurchaseItem.PurchaseItem;
 import com.springboot.eShopper.Shopper.Shopper;
 
 @Entity
-@Table(name="order")
-public class Order {
+@Table(name="purchase")
+public class Purchase {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="order_id")
-	private int orderId; // natural key
+	@Column(name="purchase_id")
+	private int purchaseId; // natural key
 	
 	@ManyToOne
 	private Shopper shopper;
 	
-	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="purchase", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.LAZY)
-	private Collection<OrderItem> orderItems = new ArrayList<>();
+	private Collection<PurchaseItem> purchaseItems = new ArrayList<>();
 	
 	@ManyToOne
 	private Address shopperAddress;
@@ -48,11 +48,11 @@ public class Order {
 	private double shopperTip;
 	
 	// Getters and Setters
-	public int getOrderId() {
-		return orderId;
+	public int getPurchaseId() {
+		return purchaseId;
 	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setPurchaseId(int purchaseId) {
+		this.purchaseId = purchaseId;
 	}
 	public Shopper getShopper() {
 		return shopper;
@@ -60,11 +60,11 @@ public class Order {
 	public void setShopper(Shopper shopper) {
 		this.shopper = shopper;
 	}
-	public Collection<OrderItem> getOrderItems() {
-		return orderItems;
+	public Collection<PurchaseItem> getPurchaseItems() {
+		return purchaseItems;
 	}
-	public void setOrderItems(Collection<OrderItem> orderItems) {
-		this.orderItems = orderItems;
+	public void setPurchaseItems(Collection<PurchaseItem> purchaseItems) {
+		this.purchaseItems = purchaseItems;
 	}
 	public Address getShopperAddress() {
 		return shopperAddress;

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.eShopper.Address.Address;
 import com.springboot.eShopper.Cart.Cart;
 import com.springboot.eShopper.Favourite.Favourite;
-import com.springboot.eShopper.Order.Order;
+import com.springboot.eShopper.Purchase.Purchase;
 
 @Entity
 @Table(name="shopper")
@@ -51,7 +51,7 @@ public class Shopper {
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.LAZY)
 	@JsonIgnore
-	private Collection<Order> orders = new ArrayList<>();
+	private Collection<Purchase> purchases = new ArrayList<>();
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.LAZY)
@@ -134,10 +134,10 @@ public class Shopper {
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
-	public Collection<Order> getOrders() {
-		return orders;
+	public Collection<Purchase> getPurchases() {
+		return purchases;
 	}
-	public void setOrder(Collection<Order> orders) {
-		this.orders = orders;
+	public void setPurchase(Collection<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 }
