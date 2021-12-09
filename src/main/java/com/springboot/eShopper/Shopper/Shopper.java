@@ -41,7 +41,7 @@ public class Shopper {
 	private String email;
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	@JsonIgnore
 	private Collection<Address> addresses = new ArrayList<>();
 	
@@ -49,12 +49,12 @@ public class Shopper {
 	private Cart cart;
 
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	@JsonIgnore
 	private Collection<Purchase> purchases = new ArrayList<>();
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	@JsonIgnore
 	private Collection<Favourite> favourites = new ArrayList<>();
 	

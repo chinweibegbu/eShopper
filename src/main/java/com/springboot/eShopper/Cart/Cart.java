@@ -27,10 +27,11 @@ public class Cart {
 	private int cartId;	// surrogate key
 	
 	@ManyToOne
+	@JsonIgnore
 	private Shopper shopper;
 	
 	@OneToMany(mappedBy="cart", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private Collection<CartItem> cartItems = new ArrayList<>();
 	
 	@Column(name="wallet_top")

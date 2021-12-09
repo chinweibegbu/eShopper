@@ -4,6 +4,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
+import com.springboot.eShopper.Shopper.Shopper;
+
 @Service
 public class CartService {
 	
@@ -16,6 +18,10 @@ public class CartService {
 	
 	public List<Cart> getAllCarts() {
 		return cartRepository.findAll();
+	}
+	
+	public Cart getCartByShopper(Shopper shopper) {
+		return cartRepository.getCartByShopper(shopper);
 	}
 
 	public void addNewCart(Cart cart) {
