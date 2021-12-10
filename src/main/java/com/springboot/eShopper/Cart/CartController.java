@@ -21,6 +21,11 @@ public class CartController {
 		return cartService.getAllCarts();
 	}
 	
+	@GetMapping("{cartId}")
+	public Cart getCartbyId(@PathVariable("cartId") Integer cartId) {
+		return cartService.getCartById(cartId);
+	}
+	
 	@PostMapping
 	public void registerNewCart(@RequestBody Cart cart) {
 		cartService.addNewCart(cart);
