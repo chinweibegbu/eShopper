@@ -17,8 +17,8 @@ public class CategoryController {
 	}
 
 	@GetMapping
-	public List<Category> getAllCategorys() {
-		return categoryService.getAllCategorys();
+	public List<Category> getAllCategories() {
+		return categoryService.getAllCategories();
 	}
 	
 	@PostMapping
