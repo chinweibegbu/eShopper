@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.springboot.eShopper.Shopper.Shopper;
+
 @RestController
 @RequestMapping(path="api/v1/products")
 public class ProductController {
@@ -21,9 +23,19 @@ public class ProductController {
 		return productService.getAllProducts();
 	}
 	
+	@GetMapping(path="{productId}")
+	public Product getProductById(@PathVariable("productId") Integer productId) {
+		return productService.getProductById(productId);
+	}
+	
+	@GetMapping(path="/category/{categoryName}")
+	public List<Product> getProductsByCategory(@PathVariable("categoryName") String categoryName) {
+		return productService.getProductsByCategory(categoryName);
+	}
+	
 	@PostMapping
 	public void registerNewProduct(@RequestBody Product product) {
-		productService.addNewProduct(product);
+		productService.addNewProduct(product);		
 	}
 	
 	@DeleteMapping(path="{productId}")
@@ -32,7 +44,7 @@ public class ProductController {
 	}
 	
 	@PutMapping(path="{productId}")
-	public void updateProduct(@RequestBody Product product, @PathVariable Integer productId) {
+	public void updateShopper(@RequestBody Product product, @PathVariable Integer productId) {
 		productService.updateProduct(product, productId);
 	}
 }

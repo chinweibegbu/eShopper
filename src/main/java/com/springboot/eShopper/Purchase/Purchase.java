@@ -32,7 +32,7 @@ public class Purchase {
 	private Shopper shopper;
 	
 	@OneToMany(mappedBy="purchase", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private Collection<PurchaseItem> purchaseItems = new ArrayList<>();
 	
 	@ManyToOne

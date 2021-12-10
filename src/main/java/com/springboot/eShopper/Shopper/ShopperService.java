@@ -97,9 +97,9 @@ public class ShopperService {
 		String newEmail = shopper.getEmail();
 		
 		if(!(newFirstName == null)) {
-			if (newFirstName .length() > 0 && shopperToUpdate.getFirstName() != newFirstName) {
+			if (newFirstName.length() > 0 && shopperToUpdate.getFirstName() != newFirstName) {
 				shopperToUpdate.setFirstName(shopper.getFirstName());
-			} else if(newFirstName .length() <= 0) {
+			} else if(newFirstName.length() <= 0) {
 				throw new IllegalStateException("Name cannot be blank");
 			}
 		}

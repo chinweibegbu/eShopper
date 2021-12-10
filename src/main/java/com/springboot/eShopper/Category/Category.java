@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.eShopper.Product.Product;
 
 @Entity
@@ -27,7 +28,7 @@ public class Category {
 	private String categoryName;
 	
 	@OneToMany(mappedBy="category", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private Collection<Product> products = new ArrayList<>();
 	
 	// Getters and Setters

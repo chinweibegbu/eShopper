@@ -42,7 +42,8 @@ public class Product {
 	private int stockCount;
 	
 	@OneToMany(mappedBy="product", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Collection<Favourite> favourites = new ArrayList<>();
 	
 	// Getters and Setters
