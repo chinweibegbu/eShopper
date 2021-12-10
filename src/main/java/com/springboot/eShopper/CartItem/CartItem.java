@@ -13,6 +13,7 @@ import com.springboot.eShopper.Product.Product;
 @Table(name="cart_item")
 public class CartItem extends Product {
 	@ManyToOne
+	@JsonIgnore
 	private Cart cart;
 	
 	@Column(name="item_count")

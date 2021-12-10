@@ -29,6 +29,7 @@ public class Category {
 	
 	@OneToMany(mappedBy="category", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Collection<Product> products = new ArrayList<>();
 	
 	// Getters and Setters
