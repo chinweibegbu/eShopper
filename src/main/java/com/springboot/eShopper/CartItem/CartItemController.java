@@ -35,6 +35,11 @@ public class CartItemController {
 		return cartItemService.getCartItemById(cartItemId);
 	}
 	
+	@GetMapping(path="/search/{searchTerm}")
+	public List<CartItem> searchCartItemsByProductName(@PathVariable("searchTerm") String searchTerm) {
+		return cartItemService.searchCartItemsByProductName(searchTerm);
+	}
+		
 	@PostMapping
 	public void addNewCartItem(@RequestBody Map<String, Integer> input) {		
 		cartItemService.addNewCartItem(input.get("productId"), input.get("productCount"), input.get("cartId"));

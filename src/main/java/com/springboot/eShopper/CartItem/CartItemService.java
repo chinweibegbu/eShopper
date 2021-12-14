@@ -42,7 +42,19 @@ public class CartItemService {
 	}
 
 	public CartItem getCartItemById(Integer cartItemId) {
+		// Get if cartItem exists
+		boolean exists = cartItemRepository.existsById(cartItemId);
+		
+		if(!exists) {
+			throw new IllegalStateException("CartItem with an id of " + cartItemId + " does not exist");
+		}
+		
+		// Else, return cartItem
 		return cartItemRepository.findById(cartItemId).get();
+	}
+	
+	public List<CartItem> searchCartItemsByProductName(String searchTerm) {
+		return cartItemRepository.findByProductNameContaining(searchTerm);
 	}
 	
 	public void addNewCartItem(Integer productId, Integer itemCount, Integer cartId) {		
@@ -125,6 +137,21 @@ public class CartItemService {
 			throw new IllegalStateException("CartItem with an id of " + cartItemId + " does not exist");
 		}
 		
-		cartItemRepository.save(cartItem);
+		// Get cartItem to update
+		CartItem cartItemToUpdate = cartItemRepository.getById(cartItemId);
+		
+		// Get new itemCount
+		Integer newItemCount = cartItem.getItemCount();
+		
+		// Validate newItemCount
+		if(newItemCount <= 0) {
+			throw new IllegalStateException("CartItem must have an itemCount of at least 1");
+		} else if(newItemCount == cartItemToUpdate.getItemCount()) {
+			throw new IllegalStateException("CartItem itemCount is the same");
+		} else {
+			cartItemToUpdate.setItemCount(newItemCount);
+		}
+		
+		cartItemRepository.save(cartItemToUpdate);
 	}
 }
