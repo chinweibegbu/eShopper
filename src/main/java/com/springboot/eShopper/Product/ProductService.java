@@ -1,10 +1,10 @@
 package com.springboot.eShopper.Product;
-import java.beans.Introspector;
 import java.util.*;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
+import com.springboot.eShopper.CartItem.CartItem;
 import com.springboot.eShopper.Category.Category;
 import com.springboot.eShopper.Category.CategoryRepository;
 
@@ -21,7 +21,7 @@ public class ProductService {
 	}
 	
 	public List<Product> getAllProducts() {
-		return productRepository.findAll();
+		return productRepository.getAllProducts();
 	}
 	
 	public Product getProductById(Integer productId) {
@@ -40,6 +40,10 @@ public class ProductService {
 		// Else, return a list of all categories with that category
 		return productRepository.getProductsByCategory(category.get());
 	}
+	
+	public List<Product> searchProductsByProductName(String searchTerm) {
+		return productRepository.findByProductNameContaining(searchTerm);
+	}
 
 	public void addNewProduct(Product product) {
 		// Add product to DB
@@ -52,7 +56,7 @@ public class ProductService {
 		category.getProducts().add(product);
 	}
 
-	public void deleteProduct(Integer productId) {
+	public void discontinueProduct(Integer productId) {
 		// Get product with the given ID
 		boolean exists = productRepository.existsById(productId);
 		
@@ -60,8 +64,10 @@ public class ProductService {
 			throw new IllegalStateException("Product with an id of " + productId + " does not exist");
 		}
 		
+		Product discontinuedProduct = updateProductStock(productId, 0);
+		
 		// Else, save the product
-		productRepository.deleteById(productId);
+		productRepository.save(discontinuedProduct);
 	}
 
 	@Transactional
@@ -131,5 +137,21 @@ public class ProductService {
 		productToUpdate.setStockCount(newProductStock);
 		
 		return productToUpdate;
+	}
+	
+	public void decreaseProductStock(Integer productId, Integer decrease) {
+		Product productToUpdate = productRepository.getById(productId);
+		int reducedStockCount = productToUpdate.getStockCount() - decrease;
+		productToUpdate.setStockCount(reducedStockCount);
+		
+		productRepository.save(productToUpdate);
+	}
+	
+	public void increaseProductStock(Integer productId, Integer increase) {
+		Product productToUpdate = productRepository.getById(productId);
+		int increasedStockCount = productToUpdate.getStockCount() - increase;
+		productToUpdate.setStockCount(increasedStockCount);
+		
+		productRepository.save(productToUpdate);
 	}
 }

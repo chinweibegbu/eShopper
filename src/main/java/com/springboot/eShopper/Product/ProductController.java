@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.springboot.eShopper.CartItem.CartItem;
 import com.springboot.eShopper.Shopper.Shopper;
 
 @RestController
@@ -33,18 +34,23 @@ public class ProductController {
 		return productService.getProductsByCategory(categoryName);
 	}
 	
+	@GetMapping(path="/search/{searchTerm}")
+	public List<Product> searchProductsByProductName(@PathVariable("searchTerm") String searchTerm) {
+		return productService.searchProductsByProductName(searchTerm);
+	}
+	
 	@PostMapping
 	public void registerNewProduct(@RequestBody Product product) {
 		productService.addNewProduct(product);		
 	}
 	
-	@DeleteMapping(path="{productId}")
-	public void deleteProduct(@PathVariable("productId") Integer productId) {
-		productService.deleteProduct(productId);
+	@PutMapping(path="/discontinue/{productId}")
+	public void discontinueProduct(@PathVariable("productId") Integer productId) {
+		productService.discontinueProduct(productId);
 	}
 	
 	@PutMapping(path="{productId}")
-	public void updateShopper(@RequestBody Product product, @PathVariable Integer productId) {
+	public void updateProduct(@RequestBody Product product, @PathVariable Integer productId) {
 		productService.updateProduct(product, productId);
 	}
 }
