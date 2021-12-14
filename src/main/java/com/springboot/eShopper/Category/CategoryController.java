@@ -21,14 +21,14 @@ public class CategoryController {
 		return categoryService.getAllCategories();
 	}
 	
+	@GetMapping(path="{categoryId}")
+	public Category getAllCategories(@PathVariable("categoryId") Integer categoryId) {
+		return categoryService.getCategoryById(categoryId);
+	}
+	
 	@PostMapping
 	public void registerNewCategory(@RequestBody Category category) {
 		categoryService.addNewCategory(category);
-	}
-	
-	@DeleteMapping(path="{categoryId}")
-	public void deleteCategory(@PathVariable("categoryId") Integer categoryId) {
-		categoryService.deleteCategory(categoryId);
 	}
 	
 	@PutMapping(path="{categoryId}")
