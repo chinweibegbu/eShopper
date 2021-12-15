@@ -26,14 +26,9 @@ public class CartController {
 		return cartService.getCartById(cartId);
 	}
 	
-	@PostMapping
-	public void registerNewCart(@RequestBody Cart cart) {
-		cartService.addNewCart(cart);
-	}
-	
-	@DeleteMapping(path="{cartId}")
-	public void deleteCart(@PathVariable("cartId") Integer cartId) {
-		cartService.deleteCart(cartId);
+	@GetMapping("/shopper/{shopperId}")
+	public Cart getCartbyShopperId(@PathVariable("shopperId") Integer shopperId) {
+		return cartService.getCartByShopperId(shopperId);
 	}
 	
 	@PutMapping(path="{cartId}")
