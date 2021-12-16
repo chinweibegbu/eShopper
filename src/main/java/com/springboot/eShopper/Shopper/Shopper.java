@@ -54,7 +54,7 @@ public class Shopper {
 	private Collection<Purchase> purchases = new ArrayList<>();
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch=FetchType.LAZY)
 	@JsonIgnore
 	private Collection<Favourite> favourites = new ArrayList<>();
 	

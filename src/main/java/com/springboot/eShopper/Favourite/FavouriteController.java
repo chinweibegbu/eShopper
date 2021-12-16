@@ -21,8 +21,23 @@ public class FavouriteController {
 		return favouriteService.getAllFavourites();
 	}
 	
+	@GetMapping(path="{favouriteId}")
+	public Favourite getFavouriteById(@PathVariable("favouriteId") Integer favouriteId) {
+		return favouriteService.getFavouriteById(favouriteId);
+	}
+	
+	@GetMapping(path="shopper/{shopperId}")
+	public List<Favourite> getFavouritesByShopper(@PathVariable("shopperId") Integer shopperId) {
+		return favouriteService.getFavouritesByShopperId(shopperId);
+	}
+	
+	@GetMapping(path="product/{productId}")
+	public List<Favourite> getFavouritesByProduct(@PathVariable("productId") Integer productId) {
+		return favouriteService.getFavouritesByProductId(productId);
+	}
+	
 	@PostMapping
-	public void registerNewFavourite(@RequestBody Favourite favourite) {
+	public void addNewFavourite(@RequestBody Favourite favourite) {
 		favouriteService.addNewFavourite(favourite);
 	}
 	
