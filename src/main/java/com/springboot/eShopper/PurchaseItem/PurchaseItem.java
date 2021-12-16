@@ -13,6 +13,7 @@ import com.springboot.eShopper.Purchase.Purchase;
 @Table(name="purchase_item")
 public class PurchaseItem extends Product {
 	@ManyToOne
+	@JsonIgnore
 	private Purchase purchase;
 	
 	@Column(name="item_count")

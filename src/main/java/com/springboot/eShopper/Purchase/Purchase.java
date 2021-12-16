@@ -29,6 +29,7 @@ public class Purchase {
 	private int purchaseId; // natural key
 	
 	@ManyToOne
+	@JsonIgnore
 	private Shopper shopper;
 	
 	@OneToMany(mappedBy="purchase", cascade = CascadeType.ALL)
@@ -36,7 +37,7 @@ public class Purchase {
 	private Collection<PurchaseItem> purchaseItems = new ArrayList<>();
 	
 	@ManyToOne
-	private Address shopperAddress;
+	private Address purchaseAddress;
 	
 	@Column(name="delivery_window")
 	private Date deliveryWindow;
@@ -67,10 +68,10 @@ public class Purchase {
 		this.purchaseItems = purchaseItems;
 	}
 	public Address getShopperAddress() {
-		return shopperAddress;
+		return purchaseAddress;
 	}
 	public void setShopperAddress(Address shopperAddress) {
-		this.shopperAddress = shopperAddress;
+		this.purchaseAddress = shopperAddress;
 	}
 	public Date getDeliveryWindow() {
 		return deliveryWindow;

@@ -49,7 +49,6 @@ public class Shopper {
 
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.EAGER)
-	@JsonIgnore
 	private Collection<Purchase> purchases = new ArrayList<>();
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
