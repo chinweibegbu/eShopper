@@ -94,13 +94,46 @@ public class ShopperService {
 		
 		Shopper shopperToUpdate = shopperRepository.getById(shopperId);
 		String newFirstName = shopper.getFirstName();
+		String newLastName = shopper.getLastName();
+		String newPhoneNumber = shopper.getPhoneNumber();
 		String newEmail = shopper.getEmail();
 		
 		if(!(newFirstName == null)) {
-			if (newFirstName.length() > 0 && shopperToUpdate.getFirstName() != newFirstName) {
+			@SuppressWarnings("unused")
+			String fetcher = shopperToUpdate.getFirstName();
+			
+			if(newFirstName.length() <= 0) {
+				throw new IllegalStateException("First name cannot be blank");
+			} else if(newFirstName == shopperToUpdate.getFirstName()) {
+				throw new IllegalStateException("First name is the same");
+			} else if (newFirstName.length() > 0 && shopperToUpdate.getFirstName() != newFirstName) {
 				shopperToUpdate.setFirstName(shopper.getFirstName());
-			} else if(newFirstName.length() <= 0) {
-				throw new IllegalStateException("Name cannot be blank");
+			}
+		}
+		
+		if(!(newLastName == null)) {
+			@SuppressWarnings("unused")
+			String fetcher = shopperToUpdate.getLastName();
+			
+			if(newLastName.length() <= 0) {
+				throw new IllegalStateException("Last name cannot be blank");
+			} else if(newLastName == shopperToUpdate.getLastName()) {
+				throw new IllegalStateException("Last name is the same");
+			} else if (newLastName.length() > 0 && shopperToUpdate.getLastName() != newLastName) {
+				shopperToUpdate.setLastName(shopper.getLastName());
+			}  
+		}
+		
+		if(!(newPhoneNumber == null)) {
+			@SuppressWarnings("unused")
+			String fetcher = shopperToUpdate.getPhoneNumber();
+			
+			if(newPhoneNumber.length() <= 0) {
+				throw new IllegalStateException("Phone number cannot be blank");
+			} else if(newPhoneNumber == shopperToUpdate.getPhoneNumber()) {
+				throw new IllegalStateException("Phone number is the same");
+			} else if (newPhoneNumber.length() > 0 && shopperToUpdate.getPhoneNumber() != newPhoneNumber) {
+				shopperToUpdate.setPhoneNumber(shopper.getPhoneNumber());
 			}
 		}
 		
@@ -109,11 +142,16 @@ public class ShopperService {
 		if(shopperWithEmail.isPresent()) {
 			throw new IllegalStateException("New email already exists");
 		} else if(!(newEmail == null)) {
-			if(newEmail.length() > 0 && shopperToUpdate.getEmail() != newEmail) {
-				shopperToUpdate.setEmail(shopper.getEmail());
-			} else if(newEmail.length() <= 0) {
+			@SuppressWarnings("unused")
+			String fetcher = shopperToUpdate.getEmail();
+			
+			if(newEmail.length() <= 0) {
 				throw new IllegalStateException("Email cannot be blank");
-			}
+			} else if(newEmail == shopperToUpdate.getEmail()) {
+				throw new IllegalStateException("Email is the same");
+			} else if(newEmail.length() > 0 && shopperToUpdate.getEmail() != newEmail) {
+				shopperToUpdate.setEmail(shopper.getEmail());
+			} 
 		}
 		
 		shopperRepository.save(shopperToUpdate);
