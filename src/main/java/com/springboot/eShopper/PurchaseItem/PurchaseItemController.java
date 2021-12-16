@@ -21,9 +21,14 @@ public class PurchaseItemController {
 		return purchaseItemService.getAllPurchaseItems();
 	}
 	
-	@PostMapping
-	public void registerNewPurchaseItem(@RequestBody PurchaseItem purchaseItem) {
-		purchaseItemService.addNewPurchaseItem(purchaseItem);
+	@GetMapping(path="{purchaseItemId}")
+	public PurchaseItem getPurchaseItemById(@PathVariable("purchaseItemId") Integer purchaseItemId) {
+		return purchaseItemService.getPurchaseItemById(purchaseItemId);
+	}
+	
+	@GetMapping(path="purchase/{purchaseId}")
+	public List<PurchaseItem> getPurchaseItemsByPurchase(@PathVariable("purchaseId") Integer purchaseId) {
+		return purchaseItemService.getPurchaseItemsByPurchaseId(purchaseId);
 	}
 	
 	@DeleteMapping(path="{purchaseItemId}")
@@ -31,8 +36,13 @@ public class PurchaseItemController {
 		purchaseItemService.deletePurchaseItem(purchaseItemId);
 	}
 	
-	@PutMapping(path="{purchaseItemId}")
-	public void updatePurchaseItem(@RequestBody PurchaseItem purchaseItem, @PathVariable Integer purchaseItemId) {
-		purchaseItemService.updatePurchaseItem(purchaseItem, purchaseItemId);
+	@PutMapping(path="{purchaseItemId}/increment")
+	public void incrementItemCount(@PathVariable Integer purchaseItemId) {
+		purchaseItemService.incrementItemCount(purchaseItemId);
+	}
+	
+	@PutMapping(path="{purchaseItemId}/decrement")
+	public void decrementItemCount(@PathVariable Integer purchaseItemId) {
+		purchaseItemService.decrementItemCount(purchaseItemId);
 	}
 }
