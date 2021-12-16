@@ -74,7 +74,6 @@ public class CartItemService {
 		// Set cartItem details
 		cartItem.setProductName(product.getProductName());
 		cartItem.setProductPrice(product.getProductPrice());
-		cartItem.setCategory(product.getCategory());
 		cartItem.setStockCount(product.getStockCount());
 		cartItem.setItemCount(itemCount);
 		
@@ -96,9 +95,6 @@ public class CartItemService {
 		
 		// Save cart to DB
 		cartRepository.save(cart);
-				
-		// Save cartItem to DB
-		//cartItemRepository.save(cartItem); >> why was this an issue?
 	}
 
 	public void deleteCartItem(Integer cartId, Integer cartItemId) {
