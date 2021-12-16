@@ -81,6 +81,19 @@ public class AddressService {
 			throw new IllegalStateException("Address with an id of " + addressId + " does not exist");
 		}
 		
-		addressRepository.save(address);
+		Address addressToUpdate = addressRepository.getById(addressId);
+		String newAddressDetails = address.getAddressDetails();
+		
+		if(!(newAddressDetails == null)) {
+			if(newAddressDetails.length() <= 0) {
+				throw new IllegalStateException("Address cannot be blank");
+			} else if(newAddressDetails.equals(addressToUpdate.getAddressDetails())) {
+				throw new IllegalStateException("Address is the same");
+			} else if (newAddressDetails.length() > 0 && !(addressToUpdate.getAddressDetails().equals(newAddressDetails))) {
+				addressToUpdate.setAddressDetails(address.getAddressDetails());
+			}
+		}
+		
+		addressRepository.save(addressToUpdate);
 	}
 }
