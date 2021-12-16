@@ -173,11 +173,54 @@ public class PurchaseService {
 		purchaseRepository.save(purchase);
 	}
 	
-	public void addPaymentDetails() {
+	public void addPaymentDetails(Integer purchaseId, Double walletTop, Double tip) {
+		// Check if purchase exists
+		boolean exists = purchaseRepository.existsById(purchaseId);
 		
+		if(!exists) {
+			throw new IllegalStateException("Purchase with an id of " + purchaseId + " does not exist");
+		}
+		
+		// Get purchase and shopper
+		Purchase purchase = purchaseRepository.getById(purchaseId);
+		Shopper shopper = shopperRepository.getById(purchase.getShopper().getShopperId());
+		
+		shopper.setWallet(walletTop);
+		purchase.setShopperTip(tip);
+		
+		// Calculate totalCost
+		List<PurchaseItem> purchaseItems = (List<PurchaseItem>) purchase.getPurchaseItems();
+		Double totalCost = 0.00;
+		
+		for(PurchaseItem purchaseItem : purchaseItems) {
+			totalCost = totalCost + (purchaseItem.getProductPrice() * purchaseItem.getItemCount());
+		}
+		
+		totalCost = totalCost + walletTop + tip;		
+		purchase.setTotalCost(totalCost);
+		
+		// Save purchase and shopper
+		shopperRepository.save(shopper);
+		purchaseRepository.save(purchase);
+		
+		// Delete cart items
+		// - Get cart
+		Cart cart = cartRepository.getCartByShopper(shopper);
+		
+		// - Get cartItems
+		List<CartItem> cartItems = cartItemRepository.getCartItemsByCart(cart).get();
+		
+		// - Delete matching cartItems
+		for (CartItem cartItem : cartItems) {
+			for(PurchaseItem purchaseItem : purchaseItems) {
+				if (cartItem.getProductName().equals(purchaseItem.getProductName())) {
+					cartItemRepository.delete(cartItem);
+				}
+			}
+		}
 	}
 
-	public void deletePurchase(Integer purchaseId) {
+	public void deliverPurchase(Integer purchaseId) {
 		// Check if purchase exists
 		boolean exists = purchaseRepository.existsById(purchaseId);
 		
@@ -187,17 +230,5 @@ public class PurchaseService {
 		
 		// Else, save the purchase
 		purchaseRepository.deleteById(purchaseId);
-	}
-
-	@Transactional
-	public void updatePurchase(Purchase purchase, Integer purchaseId) {
-		// Check if purchase exists
-		boolean exists = purchaseRepository.existsById(purchaseId);
-		
-		if(!exists) {
-			throw new IllegalStateException("Purchase with an id of " + purchaseId + " does not exist");
-		}
-		
-		purchaseRepository.save(purchase);
 	}
 }

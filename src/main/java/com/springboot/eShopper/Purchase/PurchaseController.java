@@ -65,18 +65,13 @@ public class PurchaseController {
 		}
 	}
 	
-	@PostMapping(path="payment")
-	public void addPaymentDetails(@RequestBody Map<String, String> payment) {
-		purchaseService.addPaymentDetails();
+	@PostMapping(path="{purchaseId}/payment")
+	public void addPaymentDetails(@PathVariable("purchaseId") Integer purchaseId, @RequestBody Map<String, Double> paymentDetails) {
+		purchaseService.addPaymentDetails(purchaseId, paymentDetails.get("walletTop"), paymentDetails.get("tip"));
 	}
 	
 	@DeleteMapping(path="{purchaseId}")
-	public void deletePurchase(@PathVariable("purchaseId") Integer purchaseId) {
-		purchaseService.deletePurchase(purchaseId);
-	}
-	
-	@PutMapping(path="{purchaseId}")
-	public void updatePurchase(@RequestBody Purchase purchase, @PathVariable Integer purchaseId) {
-		purchaseService.updatePurchase(purchase, purchaseId);
+	public void deliverPurchase(@PathVariable("purchaseId") Integer purchaseId) {
+		purchaseService.deliverPurchase(purchaseId);
 	}
 }

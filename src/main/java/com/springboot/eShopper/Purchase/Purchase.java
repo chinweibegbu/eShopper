@@ -48,6 +48,9 @@ public class Purchase {
 	@Column(name="shopper_tip")
 	private double shopperTip;
 	
+	@Column(name="total_cost")
+	private double totalCost;
+	
 	// Getters and Setters
 	public int getPurchaseId() {
 		return purchaseId;
@@ -90,5 +93,17 @@ public class Purchase {
 	}
 	public void setShopperTip(double shopperTip) {
 		this.shopperTip = shopperTip;
+	}
+	public Address getPurchaseAddress() {
+		return purchaseAddress;
+	}
+	public void setPurchaseAddress(Address purchaseAddress) {
+		this.purchaseAddress = purchaseAddress;
+	}
+	public double getTotalCost() {
+		return totalCost;
+	}
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
 	}
 }
