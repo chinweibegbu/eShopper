@@ -17,12 +17,22 @@ public class AddressController {
 	}
 
 	@GetMapping
-	public List<Address> getAllAddresss() {
-		return addressService.getAllAddresss();
+	public List<Address> getAllAddresses() {
+		return addressService.getAllAddresses();
+	}
+	
+	@GetMapping(path="{addressId}")
+	public Address getAddressById(@PathVariable("addressId") Integer addressId) {
+		return addressService.getAddressById(addressId);
+	}
+	
+	@GetMapping(path="shopper/{shopperId}")
+	public List<Address> getAddressedByShopper(@PathVariable("shopperId") Integer shopperId) {
+		return addressService.getAddressesByShopperId(shopperId);
 	}
 	
 	@PostMapping
-	public void registerNewAddress(@RequestBody Address address) {
+	public void addNewAddress(@RequestBody Address address) {
 		addressService.addNewAddress(address);
 	}
 	

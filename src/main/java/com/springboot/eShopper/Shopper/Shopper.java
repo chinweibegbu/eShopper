@@ -42,7 +42,6 @@ public class Shopper {
 	
 	@OneToMany(mappedBy="shopper", cascade = CascadeType.ALL)
 	@ElementCollection(fetch=FetchType.EAGER)
-	@JsonIgnore
 	private Collection<Address> addresses = new ArrayList<>();
 	
 	@OneToOne

@@ -2,13 +2,16 @@ package com.springboot.eShopper.Address;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springboot.eShopper.Shopper.Shopper;
 
 @Entity
@@ -19,8 +22,9 @@ public class Address {
 	private int addressId;	// surrogate key
 	
 	@ManyToOne
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Shopper shopper;
-	
+
 	@Column(name="address_details")
 	private String addressDetails;
 	
@@ -37,6 +41,12 @@ public class Address {
 	public void setShopper(Shopper shopper) {
 		this.shopper = shopper;
 	}
+//	public String getShopperName() {
+//		return shopperName;
+//	}
+//	public void setShopperName() {
+//		this.shopperName = this.shopper.getFirstName() + " " + this.shopper.getLastName();
+//	}
 	public String getAddressDetails() {
 		return addressDetails;
 	}
